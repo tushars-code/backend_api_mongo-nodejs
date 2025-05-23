@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/job_entries/index.js",
+      "src": "api/job_entries/job_entries.js",
       "use": "@vercel/node"
     },
     {
@@ -13,7 +13,7 @@
   "routes": [
     {
       "src": "/api/job_entries",
-      "dest": "api/job_entries/index.js"
+      "dest": "api/job_entries/job_entries.js"
     },
     {
       "src": "/api/job_entries/(.*)",
