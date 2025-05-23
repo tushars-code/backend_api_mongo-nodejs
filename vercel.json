@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/api/**/*.js",
+      "src": "api/job_entries.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/api/$1"
+      "src": "/api/job_entries",
+      "dest": "api/job_entries.js"
     }
   ]
 }

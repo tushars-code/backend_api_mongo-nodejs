@@ -2,15 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node api/job_entries.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node api/job_entries.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "dotenv": "^16.5.0",
     "mongodb": "^6.16.0"

@@ -7,12 +7,14 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     const jobs = await collection.find({}).toArray();
-    res.status(200).json(jobs);
-  } else if (req.method === "POST") {
+    return res.status(200).json(jobs);
+  }
+
+  if (req.method === "POST") {
     const { name, job, jd } = req.body;
     const result = await collection.insertOne({ name, job, jd });
-    res.status(201).json(result);
-  } else {
-    res.status(405).json({ message: "Method Not Allowed" });
+    return res.status(201).json(result);
   }
+
+  return res.status(405).end("Method Not Allowed");
 }
