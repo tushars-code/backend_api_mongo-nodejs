@@ -8,6 +8,11 @@ export default async function handler(req, res) {
   const collection = db.collection("jobs");
   const { id } = req.query;
 
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid ID format" });
+  }
+
+
   try {
     if (req.method === "DELETE") {
       const result = await collection.deleteOne({ _id: new ObjectId(id) });
