@@ -2,18 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/job_entries.js",
+      "src": "api/job_entries/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/job_entries/[id].js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/job_entries",
-      "dest": "api/job_entries.js"
+      "dest": "api/job_entries/index.js"
+    },
+    {
+      "src": "/api/job_entries/(.*)",
+      "dest": "api/job_entries/[id].js"
     }
-  ],
-  "rewrites": [
-    { "source": "/api/job_entries/:id", "destination": "/api/job_entries.js?id=:id" },
-    { "source": "/api/job_entries", "destination": "/api/job_entries.js" }
   ]
 }
