@@ -13,7 +13,7 @@
   "routes": [
     {
       "src": "/api/job_entries",
-      "dest": "api/job_entries/index.js.js"
+      "dest": "api/job_entries/index.js"
     },
     {
       "src": "/api/job_entries/(.*)",
