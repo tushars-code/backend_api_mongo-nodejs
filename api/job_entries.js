@@ -3,7 +3,7 @@ import clientPromise from "../../backend/api/db";
 export default async function handler(req, res) {
   try {
     const client = await clientPromise;
-    const db = client.db("jobAppDB");  // Explicit DB name
+    const db = client.db("jobAppDB");
 
     if (req.method === "GET") {
       const jobs = await db.collection("jobs").find({}).toArray();
