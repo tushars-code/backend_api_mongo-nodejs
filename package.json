@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Node.js API backend for job entries with MongoDB",
-  "main": "api/job_entries/job_entries.js",
+  "main": "api/job_entries/index.js",
   "scripts": {
-    "dev": "node api/job_entries/job_entries.js"
+    "dev": "node api/job_entries/index.js"
   },
   "keywords": [],
   "author": "",
