@@ -11,5 +11,9 @@
       "src": "/api/job_entries",
       "dest": "api/job_entries.js"
     }
+  ],
+  "rewrites": [
+    { "source": "/api/job_entries/:id", "destination": "/api/job_entries.js?id=:id" },
+    { "source": "/api/job_entries", "destination": "/api/job_entries.js" }
   ]
 }
