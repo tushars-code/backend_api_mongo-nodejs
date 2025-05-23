@@ -8,21 +8,24 @@ export default async function handler(req, res) {
   const collection = db.collection("jobs");
   const { id } = req.query;
 
-  if (!ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid ID format" });
-  }
-
-
   try {
+    let query;
+
+    // Check if it's a valid ObjectId
+    if (ObjectId.isValid(id)) {
+      query = { _id: new ObjectId(id) };
+    } else {
+      query = { _id: id }; // treat as string
+    }
+
     if (req.method === "DELETE") {
-      const result = await collection.deleteOne({ _id: new ObjectId(id) });
+      const result = await collection.deleteOne(query);
       res.status(200).json({ message: "Deleted", result });
     } else if (req.method === "PUT") {
       const { name, job, jd } = req.body;
-      const result = await collection.updateOne(
-        { _id: new ObjectId(id) },
-        { $set: { name, job, jd } }
-      );
+      const result = await collection.updateOne(query, {
+        $set: { name, job, jd },
+      });
       res.status(200).json({ message: "Updated", result });
     } else {
       res.status(405).json({ message: "Method not allowed" });
