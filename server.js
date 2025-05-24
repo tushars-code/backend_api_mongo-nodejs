@@ -1,18 +1,16 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-import jobRoutes from "./api/job_entries/index.js";
-import jobDetailRoutes from "./api/job_entries/[id].js";
+import jobRoutes from "./routes/job_entries.js";
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-// Mount routes
+// Routes
 app.use("/api/job_entries", jobRoutes);
-app.use("/api/job_entries/:id", jobDetailRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
