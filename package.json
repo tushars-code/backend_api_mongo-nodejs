@@ -2,8 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "Node.js API backend for job entries with MongoDB",
-  "main": "api/job_entries/index.js",
+  "description": "Node.js API backend for user profiles with MongoDB",
   "scripts": {
     "start": "node server.js"
   },
