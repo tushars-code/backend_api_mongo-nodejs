@@ -13,11 +13,13 @@
   "routes": [
     {
       "src": "/api/job_entries",
-      "dest": "api/job_entries/index.js"
+      "methods": ["GET", "POST"],
+      "dest": "/api/job_entries/index.js"
     },
     {
-      "src": "/api/job_entries/(.*)",
-      "dest": "api/job_entries/[id].js"
+      "src": "/api/job_entries/(?<id>[^/]+)",
+      "methods": ["DELETE", "PUT"],
+      "dest": "/api/job_entries/[id].js"
     }
   ]
 }

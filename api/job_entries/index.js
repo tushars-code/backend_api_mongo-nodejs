@@ -11,6 +11,10 @@ export default async function handler(req, res) {
     res.status(200).json(jobs);
   } else if (req.method === "POST") {
     const job = req.body;
+
+    // ❗ Remove _id if it's present to prevent conflict with ObjectId
+    if (job._id) delete job._id;
+
     await collection.insertOne(job);
     res.status(200).json({ message: "Job added" });
   } else {

@@ -8,16 +8,13 @@ export default async function handler(req, res) {
   const collection = db.collection("jobs");
   const { id } = req.query;
 
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid ID format" });
+  }
+
+  const query = { _id: new ObjectId(id) };
+
   try {
-    let query;
-
-    // Check if it's a valid ObjectId
-    if (ObjectId.isValid(id)) {
-      query = { _id: new ObjectId(id) };
-    } else {
-      query = { _id: id }; // treat as string
-    }
-
     if (req.method === "DELETE") {
       const result = await collection.deleteOne(query);
       res.status(200).json({ message: "Deleted", result });
