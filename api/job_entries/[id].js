@@ -1,44 +1,32 @@
-// backend/api/job_entries/[id].js
+import express from "express";
 import clientPromise from "../../db.js";
 import { ObjectId } from "mongodb";
+const router = express.Router();
 
-export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
   const client = await clientPromise;
   const db = client.db("jobAppDB");
-  const collection = db.collection("jobs");
-  const { id } = req.query;
 
-  try {
-    let query;
+  const result = await db.collection("jobs").deleteOne({
+    _id: ObjectId.isValid(id) ? new ObjectId(id) : id
+  });
 
-    if (ObjectId.isValid(id)) {
-      query = { _id: new ObjectId(id) };
-    } else {
-      query = { _id: id };
-    }
+  res.json({ message: "Deleted", result });
+});
 
-    if (req.method === "DELETE") {
-      const result = await collection.deleteOne(query);
-      res.status(200).json({ message: "Deleted", result });
-    } else if (req.method === "PUT") {
-      const { name, job, jd } = req.body;
-      const result = await collection.updateOne(query, {
-        $set: { name, job, jd },
-      });
-      res.status(200).json({ message: "Updated", result });
-    } else {
-      res.status(405).json({ message: "Method not allowed" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-}
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, job, jd } = req.body;
+  const client = await clientPromise;
+  const db = client.db("jobAppDB");
+
+  const result = await db.collection("jobs").updateOne(
+    { _id: ObjectId.isValid(id) ? new ObjectId(id) : id },
+    { $set: { name, job, jd } }
+  );
+
+  res.json({ message: "Updated", result });
+});
+
+export default router;

@@ -5,17 +5,11 @@
   "description": "Node.js API backend for job entries with MongoDB",
   "main": "api/job_entries/index.js",
   "scripts": {
-    "dev": "nodemon api/job_entries/index.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "mongodb": "^6.16.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.0"
+    "mongodb": "^6.16.0",
+    "express": "^4.18.2"
   }
 }
