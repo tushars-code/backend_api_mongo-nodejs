@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
-// GET all user profiles (optional)
+// GET all user profiles
 router.get("/", async (req, res) => {
   try {
     const client = await clientPromise;
@@ -19,6 +19,10 @@ router.get("/", async (req, res) => {
 // GET a single user profile by ID
 router.get("/:id", async (req, res) => {
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: "Invalid ID format" });
+    }
+
     const client = await clientPromise;
     const collection = client.db("jobAppDB").collection("user_profiles");
     const profile = await collection.findOne({ _id: new ObjectId(req.params.id) });
@@ -46,13 +50,16 @@ router.post("/", async (req, res) => {
 // PUT update user profile
 router.put("/:id", async (req, res) => {
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: "Invalid ID format" });
+    }
+
     const client = await clientPromise;
     const collection = client.db("jobAppDB").collection("user_profiles");
-    const { id } = req.params;
     const { name, bio, college, course, imageUrl } = req.body;
 
     const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
+      { _id: new ObjectId(req.params.id) },
       { $set: { name, bio, college, course, imageUrl } }
     );
 
@@ -65,6 +72,10 @@ router.put("/:id", async (req, res) => {
 // DELETE user profile
 router.delete("/:id", async (req, res) => {
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ error: "Invalid ID format" });
+    }
+
     const client = await clientPromise;
     const collection = client.db("jobAppDB").collection("user_profiles");
     const result = await collection.deleteOne({ _id: new ObjectId(req.params.id) });
